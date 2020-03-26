@@ -7,17 +7,24 @@ import { Pelicula } from 'src/app/interfaces/interfaces';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit{
+export class Tab1Page implements OnInit {
 
   peliculas: Pelicula[] = [];
+  populares: Pelicula[] = [];
 
-  constructor(private peliculasService: PeliculasService) {}
+  constructor(private peliculasService: PeliculasService) { } 
 
   ngOnInit() {
     this.peliculasService.getPropiedadesPeli().subscribe(resp => {
       console.log('peliculas', resp);
       this.peliculas.push(...resp.results);
     });
+
+    this.peliculasService.getPopulares().subscribe(resp => {
+      console.log('populares', resp);
+      this.populares.push(...resp.results);
+    });
   }
+
 
 }

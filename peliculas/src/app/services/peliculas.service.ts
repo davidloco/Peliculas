@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ResultObject } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
+
+const URL = environment.url;
+const apiKey = environment.apiKey;
+const hoy = new Date();
+const ultimoDiaMes = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).getDate();
+const mesActual = hoy.getMonth() + 1;
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +16,22 @@ export class PeliculasService {
 
   constructor(private http: HttpClient) { }
 
+  private ejecutarQuery<T>(query: string) {
+    query = URL + query;
+    query += `&api_key=${apiKey}&language=es&include_image_language=es`;
+    return this.http.get<T>(query);
+  }
+
   getPropiedadesPeli() {
-    return this.http.get<ResultObject>(`https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2020-01-01&primary_release_date.lte=2020-04-01&api_key=2d6627fdf9e2244cb0a11492f4b8c0e8&language=es&include_image_language=es`);
+    let mesTexto;
+    if(mesActual < 10)mesTexto = '0' + mesActual;else mesTexto = mesActual;
+    const inicio = `${hoy.getFullYear()}-${mesTexto}-01`;
+    const fin = `${hoy.getFullYear()}-${mesTexto}-${ultimoDiaMes}`;
+    return this.ejecutarQuery<ResultObject>(`/discover/movie?primary_release_date.gte=${inicio}&primary_release_date.lte=${fin}`);
+  }
+
+  getPopulares(){
+    const query = `/discover/movie?sort_by=popularity.desc`;
+    return this.ejecutarQuery<ResultObject>(query);
   }
 }
