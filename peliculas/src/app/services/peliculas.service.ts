@@ -14,6 +14,8 @@ const mesActual = hoy.getMonth() + 1;
 })
 export class PeliculasService {
 
+  private popularesPage = 0;
+
   constructor(private http: HttpClient) { }
 
   private ejecutarQuery<T>(query: string) {
@@ -24,14 +26,15 @@ export class PeliculasService {
 
   getPropiedadesPeli() {
     let mesTexto;
-    if(mesActual < 10)mesTexto = '0' + mesActual;else mesTexto = mesActual;
+    if (mesActual < 10) mesTexto = '0' + mesActual; else mesTexto = mesActual;
     const inicio = `${hoy.getFullYear()}-${mesTexto}-01`;
     const fin = `${hoy.getFullYear()}-${mesTexto}-${ultimoDiaMes}`;
     return this.ejecutarQuery<ResultObject>(`/discover/movie?primary_release_date.gte=${inicio}&primary_release_date.lte=${fin}`);
   }
 
-  getPopulares(){
-    const query = `/discover/movie?sort_by=popularity.desc`;
+  getPopulares() {
+    this.popularesPage++;
+    const query = `/discover/movie?sort_by=popularity.desc${this.popularesPage}`;
     return this.ejecutarQuery<ResultObject>(query);
   }
 }

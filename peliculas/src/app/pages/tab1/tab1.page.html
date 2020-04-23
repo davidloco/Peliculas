@@ -1,5 +1,5 @@
 <ion-content color="dark">
-  <ion-grid>
+  <ion-grid fixed>
     <ion-row>
       <ion-col>
         <h3>Estrenos</h3>
@@ -7,7 +7,7 @@
     </ion-row>
   </ion-grid>
   <app-peliculas [peliculas]="peliculas"></app-peliculas>
-  <ion-grid>
+  <ion-grid fixed>
     <ion-row>
       <ion-col>
         <h3>Cartelera</h3>
@@ -15,12 +15,12 @@
     </ion-row>
   </ion-grid>
   <app-poster [peliculas]="peliculas"></app-poster>
-  <ion-grid>
+  <ion-grid fixed>
     <ion-row>
       <ion-col>
         <h3>Populares</h3>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <app-poster [peliculas]="populares"></app-poster>
+  <app-pares-peliculas [peliculas]="populares" (cargarMas)="cargarMas()"></app-pares-peliculas>
 </ion-content>

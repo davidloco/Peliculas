@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { PeliculaComponent } from './pelicula/pelicula.component';
 import { PeliculasComponent } from './peliculas/peliculas.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PosterComponent } from './poster/poster.component';
+import { ParesPeliculasComponent } from './pares-peliculas/pares-peliculas.component';
+import { DetalleComponent } from './detalle/detalle.component';
 
 
 
 @NgModule({
+  entryComponents: [
+    DetalleComponent
+  ],
   declarations: [
-    PeliculaComponent,
     PeliculasComponent,
-    PosterComponent
+    PosterComponent,
+    ParesPeliculasComponent,
+    DetalleComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +26,9 @@ import { PosterComponent } from './poster/poster.component';
   ],
   exports: [
     PeliculasComponent,
-    PosterComponent
+    PosterComponent,
+    ParesPeliculasComponent,
+    DetalleComponent
   ]
 })
 export class ComponentsModule { }

@@ -1,25 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Pelicula } from 'src/app/interfaces/interfaces';
-import { ModalController } from '@ionic/angular';
 import { DetalleComponent } from '../detalle/detalle.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-peliculas',
-  templateUrl: './peliculas.component.html',
-  styleUrls: ['./peliculas.component.scss'],
+  selector: 'app-pares-peliculas',
+  templateUrl: './pares-peliculas.component.html',
+  styleUrls: ['./pares-peliculas.component.scss'],
 })
-export class PeliculasComponent implements OnInit {
+export class ParesPeliculasComponent implements OnInit {
 
   @Input() peliculas: Pelicula[] = [];
+  @Output() cargarMas = new EventEmitter();
 
   slideOpts = {
-    slidesPerView: 1.1,
+    slidesPerView: 3.2,
     freeMOde: true
   }
 
   constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
+
+  onClick() {
+    this.cargarMas.emit();
+  }
 
   async verDetalle(id: String) {
     const modal = await this.modalCtrl.create({
@@ -30,5 +37,7 @@ export class PeliculasComponent implements OnInit {
     });
     modal.present();
   }
+
+
 
 }
