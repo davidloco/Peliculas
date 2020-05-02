@@ -39,11 +39,15 @@ export class PeliculasService {
     return this.ejecutarQuery<ResultObject>(query);
   }
 
-  getPeliculaDetalle(id: string){
+  getPeliculaDetalle(id: string) {
     return this.ejecutarQuery<PeliculaDetalle>(`/movie/${id}?a=1`);
   }
 
-  getActoresDetalle(id: string){
+  getActoresDetalle(id: string) {
     return this.ejecutarQuery<RespuestaCredits>(`/movie/${id}/credits?a=1`);
+  }
+
+  buscarPeliculas(texto: string) {
+    return this.ejecutarQuery(`/search/movie?query=${texto}`);
   }
 }
