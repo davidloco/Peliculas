@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Pelicula } from 'src/app/interfaces/interfaces';
 import { PeliculasService } from 'src/app/services/peliculas.service';
+import { DetalleComponent } from 'src/app/components/detalle/detalle.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -13,7 +15,7 @@ export class Tab2Page {
   buscando = false;
   peliculas: Pelicula[] = [];
 
-  constructor(private moviesService: PeliculasService) { }
+  constructor(private moviesService: PeliculasService, private modalCtrl: ModalController) { }
 
   buscar(event) {
     const valor: string = event.detail.value;
@@ -33,6 +35,15 @@ export class Tab2Page {
         this.buscando = false;
     });
 
+  }
+  async verDetalle(id: String) {
+    const modal = await this.modalCtrl.create({
+      component: DetalleComponent,
+      componentProps: {
+        id
+      }
+    });
+    modal.present();
   }
 
 }
